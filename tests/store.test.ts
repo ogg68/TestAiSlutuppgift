@@ -18,7 +18,7 @@ test.beforeEach(async ({ page }) => {
 
     //then open the main page:
     storePage = new StorePage(page);
-    await page.goto("/store2/");
+    await storePage.goto();
 })
 
 

@@ -37,7 +37,6 @@ test.beforeEach(async ({ page }) => {
 
     //then open the main page:
     storePage = new StorePage(page);
-    //await page.goto("/store2/");
 })
 
 test("get all products", async () => {
@@ -60,7 +59,7 @@ test("get product 3", async () => {
 
 test("add product to cart and verify receipt", async ({ page }) => {
     // first move to the page:
-    await page.goto("/store2/");
+    await storePage.goto();
 
     // get the API price for the product:
     const response = await apiContext.get(`v1/price/${product.id}`);

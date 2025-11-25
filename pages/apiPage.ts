@@ -1,6 +1,6 @@
 import { APIRequestContext, request, expect } from '@playwright/test';
 
-export class StoreApi {
+export class ApiPage {
   readonly api: APIRequestContext;
 
   constructor(api: APIRequestContext) {
@@ -11,7 +11,7 @@ export class StoreApi {
     const api = await request.newContext({
       baseURL: "https://hoff.is/store2/api/"
     });
-    return new StoreApi(api);
+    return new ApiPage(api);
   }
 
   async listProducts() {
