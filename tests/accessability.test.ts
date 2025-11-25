@@ -27,27 +27,27 @@ test.beforeEach(async ({ page }) => {
     accessPage = new AccessibilityPage(page);
 })
 
-// Helper for critical accessibility rules
-// function axeCriticalRules(page: Page) {
-//     return new AxeBuilder({ page }).withRules([
-//         'label',
-//         'button-name',
-//         'link-name',
-//         'focus-order-semantics',
-//         'aria-roles',
-//         'duplicate-id',
-//         'html-has-lang',
-//     ]);
-// }
 
 test.describe("homepage accessability", () => {
 
-    // just make a simpl & not critical test, here tabindex:
-    test("test accessability tab", async ({ page }) => {
+    // just make a simple & "not" critical test, - here tabindex:
+    test("test accessability tabindex", async ({ page }) => {
 
         const result = await accessPage.analyzeTabindexRules();
 
-        //expect(accessibilityScanResults.violations).toEqual([]);
+        expect(result.violations, JSON.stringify(result, null, 2))
+            .toHaveLength(0);
+    });
+
+    // test of some other accessability rules
+    test("test accessability others", async ({ page }) => {
+
+        const result = await accessPage.analyzeCustomRules([
+            "page-has-heading-one",
+            "form-field-multiple-labels",
+            "heading-order",
+        ]);
+
         expect(result.violations, JSON.stringify(result, null, 2))
             .toHaveLength(0);
     });
@@ -56,38 +56,13 @@ test.describe("homepage accessability", () => {
     // should not have any automatically detectable accessibility issues
     test("test accessability critical", async ({ page }) => {
         // analys all:
-        //const accessibilityScanResults = await new AxeBuilder({ page }).analyze();
+        //const accessibilityScanResultAll = await accessPage.analyzeAll();
 
-        // filtered by not relevant rules:
-        // const accessibilityScanResults = await new AxeBuilder({ page })
-        //     .disableRules([
-        //         'color-contrast',
-        //         'region',
-        //         'frame-title',
-        //         'meta-viewport',
-        //         'document-title'
-        //     ])
-        //     .analyze();
+        // analys all except for filtered:
+        //const accessibilityScanResultsFiltered = await accessPage.analyzeFiltered();
 
-        // filtered with relevant and critical rules:
+        // analys all only filtered with relevant and critical rules:
         const result = await accessPage.analyzeCriticalRules();
-
-        //const accessibilityScanResults = await axeCriticalRules(page).analyze();
-        // const accessibilityScanResults = await new AxeBuilder({ page })
-        //     .withRules([
-        //         'label',                    // alla inputs ska ha label!
-        //         'button-name',              // saknar text
-        //         'link-name',                // saknar text
-        //         'focus-order-semantics',    // ger problem för tangentbordsanvändare
-        //         'aria-roles',
-        //         'duplicate-id',             // är sidan korrekt uppmärkt
-        //         'html-has-lang'
-        //     ])
-        //     .analyze();
-
-        //expect(accessibilityScanResults.violations).toEqual([]);
-        //expect(accessibilityScanResults.violations, JSON.stringify(accessibilityScanResults, null, 2))
-            //.toHaveLength(0);
         
         expect(result.violations, JSON.stringify(result, null, 2))
             .toHaveLength(0);
