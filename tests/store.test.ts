@@ -13,8 +13,8 @@ test.beforeEach(async ({ page }) => {
     if (process.env.STORE_USER_PASSWORD !== undefined){
         password = process.env.STORE_USER_PASSWORD;
     }
-    //await loginPage.login('Ola', 'sup3rs3cr3t', "Business");
-    await loginPage.login('Ola', password, "Business");
+    await loginPage.login('Ola', 'sup3rs3cr3t', "Business");
+    //await loginPage.login('Ola', password, "Business");
 
     //then open the main page:
     storePage = new StorePage(page);
@@ -22,7 +22,7 @@ test.beforeEach(async ({ page }) => {
 })
 
 
-test.afterAll(async ({}) =>{
+test.afterEach(async ({}) =>{
     console.log('Done with tests');
 })
 
